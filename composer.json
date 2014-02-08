@@ -1,0 +1,24 @@
+{
+    "name": "camcima/huffman-coding",
+    "type": "library",
+    "description": "Huffman Coding for PHP",
+    "keywords": ["huffman", "compression", "deflate", "gzip", "zip"],
+    "homepage": "https://github.com/camcima/huffman-coding-php",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Carlos Cima",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4.0",
+        "camcima/bit-util-php": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "Huffman": "src/"
+        }
+    }
+}

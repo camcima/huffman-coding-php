@@ -1,8 +1,29 @@
 <?php
-require 'huffmancoding.php';
 
-$strings= array ();
-$strings[] = '31221346514522314656544323265165434163324625134556774656587652165296384574236452123345223767985674435672123495823745
+namespace Test;
+
+use Huffman\HuffmanCoding;
+
+/**
+ * HuffmanCodingTest
+ */
+class HuffmanCodingTest extends \PHPUnit_Framework_TestCase
+{
+    /**
+     * @var array
+     */
+    protected $fixtures;
+
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->fixtures = [];
+        $this->loadFixtures();
+    }
+
+    protected function loadFixtures()
+    {
+        $this->fixtures[] = '31221346514522314656544323265165434163324625134556774656587652165296384574236452123345223767985674435672123495823745
 31221346514522314656544323265165434163324625134556774656587652165296384574236452123345223767985674435672123495823745
 12346542346565434566436545665344562r1t3we2t656354256542345645456253643466756547685940685498654766587632313254123234131343414
 31221346514522314656544323265165434163324625134556774656587652165296384574236452123345223767985674435672123495823745
@@ -20,7 +41,8 @@ $strings[] = '312213465145223146565443232651654341633246251345567746565876521652
 12346542346565434566436545665344562r1t3we2t65635425654234564545625364346675654768594068549865476658763231325412323413134341431221346514522314656544323265165434163324625134556774656587652165296384574236452123345223767985674435672123495823745
 12346542346565434566436545665344562r1t3we2t65635425654234564545625364346675654768594068549865476658763231325412323413134341431221346514522314656544323265165434163324625134556774656587652165296384574236452123345223767985674435672123495823745
 12346542346565434566436545665344562r1t3we2t656354256542345645456253643466756547685940685498654766587632313254123234131343414';
-$strings[] = 'this is an example of a huffman tree this is an example of a huffman tree this is an example of a huffman tree 
+
+        $this->fixtures[] = 'this is an example of a huffman tree this is an example of a huffman tree this is an example of a huffman tree 
 this is an example of a huffman tree this is an example of a huffman tree this is an example of a huffman tree 
 this is an example of a huffman tree this is an example of a huffman tree this is an example of a huffman tree 
 this is an example of a huffman tree this is an example of a huffman tree this is an example of a huffman tree 
@@ -30,7 +52,8 @@ this is an example of a huffman tree this is an example of a huffman tree this i
 this is an example of a huffman tree this is an example of a huffman tree this is an example of a huffman tree 
 this is an example of a huffman tree this is an example of a huffman tree this is an example of a huffman tree 
 this is an example of a huffman tree this is an example of a huffman tree this is an example of a huffman tree';
-$strings[] = 'Six months after Haiti’s earthquake, the situation is bleak. Of the 1.5 million people displaced, 28,000, so far, have been moved to safer transitional housing. The rest huddle in tents and pray that the next rains won’t wash their meager belongings away. Crime is resurgent and everyone is desperate for some sign of recovery.
+
+        $this->fixtures[] = 'Six months after Haiti’s earthquake, the situation is bleak. Of the 1.5 million people displaced, 28,000, so far, have been moved to safer transitional housing. The rest huddle in tents and pray that the next rains won’t wash their meager belongings away. Crime is resurgent and everyone is desperate for some sign of recovery.
 The world’s leaders swore that this time would be different, that they would use this tragedy to help the Haitians build a viable economy and a functioning state. At a conference in March, they pledged $3.5 billion to finance a host of ambitious projects: new towns away from the congested capital, Port-au-Prince; new roads, hospitals, power plants, schools, forests, farms.
 A new reconstruction agency, the Interim Haiti Recovery Commission, which is supposed to oversee that rebuilding, is hardly off the ground.
 Part of the explanation for the slow progress, of course, is the sheer scale of the disaster. As Deborah Sontag wrote recently in The Times, experts say it would take a thousand trucks three to five years to clear away the wreckage, though fewer than 300 trucks are hauling now. The quake destroyed almost every ministry building and killed 17 percent of the federal work force.
@@ -42,17 +65,15 @@ The commission has a Web site, www.cirh.ht, where its projects can be viewed. At
 The United States has been generous. It has already spent more than $1 billion on emergency aid and is now spending another $175 million on projects like cash-for-work programs, debris clearance, school construction and support for agriculture and police officers.
 The White House also has a pending request before Congress for $1.6 billion in Haiti assistance. Congress needs to approve that money, and President Obama and his aides need to do all they can to get Mr. Préval and the interim commission moving more aggressively.
 Haitians have been extraordinarily patient. But their suffering is real, and they need to see progress. The world needs to see that progress is possible. If not, all of the big dreams for Haiti could evaporate. ';
+    }
 
-foreach ($strings as $index => $string)
-{
-	echo "\nEncoding string number " . ($index + 1) . ":\n";
-	$encoding = HuffmanCoding::createCodeTree ($string);
-	$encoded = HuffmanCoding::encode ($string, $encoding);
-	$decoded = HuffmanCoding::decode ($encoded);
-	assert ($decoded == $string);
-
-	echo "\tOriginal Length: " . strlen ($string) . "\n";
-	echo "\tEncoded Length: " . strlen ($encoded) . "\n";
-	echo "\tCompression: " . number_format (((strlen ($string) - strlen ($encoded)) / strlen ($string)) * 100, 2) . "%\n\n";
+    public function testEncodeDecode()
+    {
+        foreach ($this->fixtures as $string) {
+            $encoding = HuffmanCoding::createCodeTree($string);
+            $encoded = HuffmanCoding::encode($string, $encoding);
+            $decoded = HuffmanCoding::decode($encoded);
+            $this->assertEquals($string, $decoded);
+        }
+    }
 }
-
